@@ -21,8 +21,11 @@ def generate():
     import pygraphviz as pgv
 
     G = pgv.AGraph(strict=False, directed=False)
-    G.graph_attr['splines'] = 'ortho'
-    G.graph_attr['rankdir'] = 'TB'
+    # The following has a bug where lines don't connect to center of nodes
+    # G.graph_attr['splines'] = 'ortho'
+    # G.graph_attr['rankdir'] = 'TB'
+    G.graph_attr['overlap'] = 'True'
+    G.graph_attr['concentrate'] = 'True'
 
     people_nodes = {}
 
@@ -78,7 +81,7 @@ def generate():
                 G.add_subgraph([parents[0].get_name(), point_node, parents[1].get_name()], rank="same")
             else:
                 point_node = get_connector(parents[0], parents[1])
-            G.add_edge(point_node, person.get_name(), dir="none")
+            G.add_edge(point_node, person.get_name(), dir="back", arrowtail="none", arrowhead="none")
         else:
             raise ValueError(f"A person must have at most 2 parents, but {person} has {len(parents)} parents")
 

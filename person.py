@@ -1,5 +1,6 @@
 class Person:
-    def __init__(self, name: str, gender: str):
+    def __init__(self, genealogy: [], name: str, gender: str):
+        genealogy.append(self)
         self.attr = {}
         self._name = name
         self._gender = gender
